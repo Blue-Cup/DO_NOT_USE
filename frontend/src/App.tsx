@@ -1,6 +1,9 @@
 import React from 'react';
 import './App.css';
-import data from './Products/data';
+import { Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom';
+import Products from './Products/Products';
+import Home from './Home/Home';
+import Orders from './Orders/Orders';
 
 function App() {
 
@@ -12,25 +15,50 @@ function App() {
     document.querySelector(".sidebar")?.classList.remove("open");
   }
 
-<div className="content">
-  <ul className="products">
-    {
-      data.products.map(product=>
-        <li>
-          <div className="product">
-            <img className = "product-image" src={product.imageURL} alt ="product"/>
-            <div className="product-name">
-              <a href="product.html">{product.name}</a>
-            </div>
-            <div className="product-brand">{product.brand}</div>
-            <div className="product-price">{product.price}</div>
-            <div className="product-rating">{product.rating} Stars ({product.numberOfReviews} Reviews)</div>
+  return (
+    <Router>
+    <div className="grid-container">
+      <head>
+        <link rel="stylesheet" href="style.css" />
+        <title>Blue Cup</title>
+      </head>
+      <body>
+        <header className="header">
+          <div className="brand">
+            <button onClick={openMenu}>&#9776;</button>
+            <a href="index.htm">Blue Cup</a>
           </div>
-        </li>
-        )
-    }
-  </ul>
-</div>
+          <div className="header-links">
+              <Link to="/">Home</Link>
+              <Link to="/catalog">Catalog</Link>
+              <Link to="/orders">Orders</Link>
+          </div>
+        </header>
+        <aside className="sidebar">
+          <h3>Shopping Categories</h3>
+          <button className="sidebar-close-button" onClick={closeMenu}>x</button>
+          <ul>
+            <li>
+              <a href="index.html">Pants</a>
+            </li>
+
+            <li>
+              <a href="index.html">Shirts</a>
+            </li>
+          </ul>
+        </aside>
+        <main className="main">
+          <Route> // Routes? 
+              <Route path="/" element={<Home />} />
+              <Route path="/catalog" element={<Products />} />
+              <Route path="orders" element = {<Orders />}></Route>
+          </Route>
+        </main>
+        <footer className="footer">&copy; 2022 Blue Cup</footer>
+      </body>
+      </div>
+      </Router>
+  );
 }
 
 export default App;
